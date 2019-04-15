@@ -72,6 +72,7 @@ namespace WebApi.App_Start
             kernel.Bind<IAccountService>().To<AccountService>();
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IPostService>().To<PostService>();
+            kernel.Bind<ICommentService>().To<CommentService>();
         }        
     }
 }

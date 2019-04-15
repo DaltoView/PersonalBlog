@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApi.Models.CommentsController;
 using WebApi.Models.PostsController;
 
 namespace WebApi.Controllers
@@ -18,11 +19,13 @@ namespace WebApi.Controllers
     public class PostsController : ApiController
     {
         private readonly IPostService _postService;
+        private readonly ICommentService _commentService;
         private readonly IMapper _mapper;
 
-        public PostsController(IPostService postService)
+        public PostsController(IPostService postService, ICommentService commentService)
         {
             _postService = postService;
+            _commentService = commentService;
             _mapper = AutomapperConfigs.AutomapperConfigs.GetPostsControllerMapper();
         }
 
@@ -74,6 +77,14 @@ namespace WebApi.Controllers
         {
             _postService.DeletePost(id);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("{id:guid}/comments")]
+        public IHttpActionResult GetAllCommentsById(Guid id)
+        {
+            var comments = _commentService.GetCommentsByPostId(id);
+            return Ok(_mapper.Map<IEnumerable<CommentDTO>, IEnumerable<CommentModel>>(comments));
         }
     }
 }

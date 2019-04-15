@@ -138,6 +138,7 @@
     <Compile Include="Attributes\BirthdateAttribute.cs" />
     <Compile Include="AutomapperConfigs\AutomapperConfigs.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DependencyInjection\BlogDependencyInjection.cs" />
@@ -146,6 +147,8 @@
     </Compile>
     <Compile Include="Models\AccountController\UserAccountModel.cs" />
     <Compile Include="Models\AccountController\UserRegisterModel.cs" />
+    <Compile Include="Models\CommentsController\CommentEditModel.cs" />
+    <Compile Include="Models\CommentsController\CommentModel.cs" />
     <Compile Include="Models\PostsController\PostCreateModel.cs" />
     <Compile Include="Models\PostsController\PostModel.cs" />
     <Compile Include="Models\PostsController\TagModel.cs" />

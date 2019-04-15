@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using WebApi.Models;
 using WebApi.Models.AccountController;
+using WebApi.Models.CommentsController;
 using WebApi.Models.PostsController;
 using WebApi.Models.UsersController;
 
@@ -90,6 +91,29 @@ namespace WebApi.AutomapperConfigs
                 cfg.CreateMap<TagDTO, TagModel>();
                 cfg.CreateMap<PostDTO, PostModel>()
                 .ForMember(p => p.FullName, o => o.MapFrom(s => string.Join(" ", s.Author.FirstName, s.Author.LastName)));
+
+                cfg.CreateMap<CommentDTO, CommentModel>();
+                cfg.CreateMap<CommentModel, CommentDTO>()
+                .ForMember(p => p.Author, o => o.Ignore())
+                .ForMember(p => p.Post, o => o.Ignore());
+            }).CreateMapper();
+        }
+
+        public static IMapper GetCommentsControllerMapper()
+        {
+            return new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<CommentEditModel, CommentDTO>()
+                .ForMember(p => p.AuthorId, o => o.Ignore())
+                .ForMember(p => p.EditDate, o => o.Ignore())
+                .ForMember(p => p.PostDate, o => o.Ignore())
+                .ForMember(p => p.PostId, o => o.Ignore())
+                .ForMember(p => p.Author, o => o.Ignore())
+                .ForMember(p => p.Post, o => o.Ignore());
+
+                cfg.CreateMap<CommentModel, CommentDTO>()
+                .ForMember(p => p.Author, o => o.Ignore())
+                .ForMember(p => p.Post, o => o.Ignore());
             }).CreateMapper();
         }
     }

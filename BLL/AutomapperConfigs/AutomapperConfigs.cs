@@ -48,5 +48,13 @@ namespace BLL.AutomapperConfigs
                 cfg.CreateMap<PostFilterDTO, PostFilter>();
             }).CreateMapper();
         }
+
+        public static IMapper GetCommentService()
+        {
+            return new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Comment, CommentDTO>();
+            }).CreateMapper();
+        }
     }
 }

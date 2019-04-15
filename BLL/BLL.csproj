@@ -74,11 +74,13 @@
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
+    <Compile Include="Interfaces\ICommentService.cs" />
     <Compile Include="Interfaces\IPostService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
