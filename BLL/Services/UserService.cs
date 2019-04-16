@@ -23,6 +23,9 @@ namespace BLL.Services
 
         public IEnumerable<UserDTO> GetAllUsers(UserFilterDTO userSearchDTO)
         {
+            if (string.IsNullOrEmpty(userSearchDTO.SortOrder))
+                userSearchDTO.SortOrder = "username_asc";
+
             var users = UnitOfWork.UserManager.Users.AsQueryable();
 
             if(userSearchDTO != null)
@@ -108,7 +111,7 @@ namespace BLL.Services
                 }
                 );
 
-            return result;
+            return result.ToList();
         }
 
         public UserDTO GetUserById(Guid id)
@@ -191,6 +194,8 @@ namespace BLL.Services
         {
             var user = UnitOfWork.UserManager.FindById(id);
 
+            UnitOfWork.Comments.RemoveRange(user.Author.Comments);
+            UnitOfWork.Posts.RemoveRange(user.Author.Posts);
             UnitOfWork.Authors.Remove(user.Author.Id);
 
             IdentityResult result = UnitOfWork.UserManager.Delete(user);

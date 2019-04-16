@@ -87,7 +87,6 @@ namespace BLL.Services
 
             UnitOfWork.Save();
             return new OperationDetails(true);
-
         }
 
         public string GetRoleByUserId(Guid userId)
@@ -140,6 +139,8 @@ namespace BLL.Services
         {
             var user = UnitOfWork.UserManager.FindById(id);
 
+            UnitOfWork.Comments.RemoveRange(user.Author.Comments);
+            UnitOfWork.Posts.RemoveRange(user.Author.Posts);
             UnitOfWork.Authors.Remove(user.Author.Id);
 
             IdentityResult result = UnitOfWork.UserManager.Delete(user);

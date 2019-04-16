@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebApi.Models.CommentsController
+namespace WebApi.Models.PostsController
 {
     public class CommentModel
     {
         public Guid Id { get; set; }
+        [Required]
         [StringLength(150, ErrorMessage = "The comment lenghth be from {2} to {1} characters long.", MinimumLength = 1)]
         public string Text { get; set; }
         public DateTime PostDate { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IPostService
+    public interface IPostService : IDisposable
     {
         IEnumerable<PostDTO> GetAllPosts(PostFilterDTO postFilterDTO);
         PostDTO GetPostById(Guid id);

@@ -31,16 +31,53 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetAllPosts(PostFilterDTO postFilterDTO)
+        public IHttpActionResult GetAllPosts([FromUri]IEnumerable<string> tags = null, string search = null,
+            DateTime? postFrom = null, DateTime? postTo = null, string sortOrder = null, int? offset = null, int? limit = null)
         {
-            return Ok(_mapper.Map<IEnumerable<PostDTO>, IEnumerable<PostModel>>(_postService.GetAllPosts(postFilterDTO)));
+            var filter = new PostFilterDTO()
+            {
+                Tags = tags,
+                Search = search,
+                PostFrom = postFrom,
+                PostTo = postTo,
+                SortOrder = sortOrder,
+                Skip = offset,
+                Take = limit
+            };
+
+            try
+            {
+                var posts = _postService.GetAllPosts(filter);
+
+                if (posts == null || !posts.Any())
+                    return NotFound();
+
+                return Ok(_mapper.Map<IEnumerable<PostDTO>, IEnumerable<PostModel>>(posts));
+            }
+            catch(Exception)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
         [Route("{id:guid}")]
         public IHttpActionResult GetPostById(Guid id)
         {
-            return Ok(_mapper.Map<PostDTO, PostModel>(_postService.GetPostById(id)));
+            try
+            {
+                var post = _postService.GetPostById(id);
+
+                if (post == null)
+                    return NotFound();
+
+                return Ok(_mapper.Map<PostDTO, PostModel>(post));
+            }
+            catch(Exception)
+            {
+                return NotFound();
+            }
+
         }
 
         [HttpPost]
@@ -51,10 +88,19 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var postDto = _mapper.Map<PostCreateModel, PostDTO>(post);
-            postDto.AuthorId = new Guid(User.Identity.GetUserId());
-            _postService.CreatePost(postDto);
-            return Ok();
+
+            try
+            {
+                var postDto = _mapper.Map<PostCreateModel, PostDTO>(post);
+                postDto.AuthorId = new Guid(User.Identity.GetUserId());
+                _postService.CreatePost(postDto);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpPut]
@@ -65,26 +111,85 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var postDto = _mapper.Map<PostCreateModel, PostDTO>(post);
-            postDto.Id = id;
-            _postService.EditPost(postDto);
-            return Ok();
+
+            try
+            {
+                var postDto = _mapper.Map<PostCreateModel, PostDTO>(post);
+                postDto.Id = id;
+                _postService.EditPost(postDto);
+            }
+            catch(Exception)
+            {
+                return Conflict();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
         [Route("{id:guid}")]
         public IHttpActionResult DeletePost(Guid id)
         {
-            _postService.DeletePost(id);
-            return Ok();
+            try
+            {
+                _postService.DeletePost(id);
+            }
+            catch(Exception)
+            {
+                return NotFound();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpGet]
         [Route("{id:guid}/comments")]
-        public IHttpActionResult GetAllCommentsById(Guid id)
+        public IHttpActionResult GetAllCommentsByPostId(Guid id)
         {
-            var comments = _commentService.GetCommentsByPostId(id);
-            return Ok(_mapper.Map<IEnumerable<CommentDTO>, IEnumerable<CommentModel>>(comments));
+            try
+            {
+                var comments = _commentService.GetCommentsByPostId(id);
+
+                if (comments == null || !comments.Any())
+                    return NotFound();
+
+                return Ok(_mapper.Map<IEnumerable<CommentDTO>, IEnumerable<CommentModel>>(comments));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        [Route("{id:guid}/comments")]
+        public IHttpActionResult CreateComment([FromBody]CommentModel comment, [FromUri]Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            try
+            {
+                var commentDto = _mapper.Map<CommentModel, CommentDTO>(comment);
+                commentDto.AuthorId = new Guid(User.Identity.GetUserId());
+                commentDto.PostId = id;
+                _commentService.CreateComment(commentDto);
+            }
+            catch(Exception)
+            {
+                return BadRequest();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _postService.Dispose();
+            _commentService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface ICommentService
+    public interface ICommentService : IDisposable
     {
         IEnumerable<CommentDTO> GetCommentsByPostId(Guid id);
         void CreateComment(CommentDTO comment);

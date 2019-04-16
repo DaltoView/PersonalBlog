@@ -26,40 +26,44 @@ namespace WebApi.Controllers
             _mapper = AutomapperConfigs.AutomapperConfigs.GetCommentsControllerMapper();
         }
 
-        [HttpPost]
-        [Route("")]
-        public IHttpActionResult CreateComment([FromBody]CommentModel comment)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var commentDto = _mapper.Map<CommentModel, CommentDTO>(comment);
-            commentDto.AuthorId = new Guid(User.Identity.GetUserId());
-            _commentService.CreateComment(commentDto);
-
-            return Ok();
-        }
-
         [HttpPut]
         [Route("{id:guid}")]
         public IHttpActionResult EditComment([FromBody]CommentEditModel comment, [FromUri]Guid id)
         {
-            var commentDto = _mapper.Map<CommentEditModel, CommentDTO>(comment);
-            commentDto.Id = id;
+            try
+            {
+                var commentDto = _mapper.Map<CommentEditModel, CommentDTO>(comment);
+                commentDto.Id = id;
+                _commentService.EditComment(commentDto);
+            }
+            catch (Exception)
+            {
+                return Conflict();
+            }
 
-            _commentService.EditComment(commentDto);
-
-            return Ok();
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
         [Route("{id:guid}")]
         public IHttpActionResult DeleteComment(Guid id)
         {
-            _commentService.DeleteComment(id);
-            return Ok();
+            try
+            {
+                _commentService.DeleteComment(id);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _commentService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

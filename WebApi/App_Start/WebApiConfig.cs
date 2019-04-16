@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using WebApi.Filters;
 
 namespace WebApi
 {
@@ -10,7 +12,8 @@ namespace WebApi
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+            config.Services.Add(typeof(IExceptionLogger), new BlogExceptionLogger());
             // Web API routes
             config.MapHttpAttributeRoutes();
 

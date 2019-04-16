@@ -35,17 +35,17 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            UserDTO userDTO = _mapper.Map<UserRegisterModel, UserDTO>(user);
-
+            
             try
             {
+                UserDTO userDTO = _mapper.Map<UserRegisterModel, UserDTO>(user);
                 OperationDetails result = _accountService.RegisterUser(userDTO);
                 if (!result.Succeeded)
                 {
                     return BadRequest(result.Message);
                 }
 
-                return Ok();
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch (Exception e)
             {
@@ -57,7 +57,19 @@ namespace WebApi.Controllers
         [Route("")]
         public IHttpActionResult GetAccount()
         {
-            return Ok(_mapper.Map<UserDTO, UserAccountModel>(_accountService.GetUserById(new Guid(User.Identity.GetUserId()))));
+            try
+            {
+                var user = _accountService.GetUserById(new Guid(User.Identity.GetUserId()));
+
+                if (user == null)
+                    return NotFound();
+
+                return Ok(_mapper.Map<UserDTO, UserAccountModel>(user));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPut]
@@ -69,24 +81,42 @@ namespace WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = _mapper.Map<UserAccountModel, UserDTO>(account);
-            user.Id = new Guid(User.Identity.GetUserId());
-            return Ok(_accountService.EditUser(user).Message);
+            try
+            {
+                var user = _mapper.Map<UserAccountModel, UserDTO>(account);
+                user.Id = new Guid(User.Identity.GetUserId());
+                var result = _accountService.EditUser(user);
+
+                if (!result.Succeeded)
+                    return Conflict();
+
+                return Ok();
+            }
+            catch(Exception)
+            {
+                return Conflict();
+            }
+
         }
 
         [HttpDelete]
         [Route("")]
         public IHttpActionResult DeleteAccount()
         {
-            _accountService.DeleteUser(new Guid(User.Identity.GetUserId()));
-            return Ok();
-        }
+            try
+            {
+                var result = _accountService.DeleteUser(new Guid(User.Identity.GetUserId()));
 
-        [HttpGet]
-        [Route("test")]
-        public IHttpActionResult Test()
-        {
-            return Ok(User.Identity.GetUserId());
+                if (!result.Succeeded)
+                    return NotFound();
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+
         }
 
         protected override void Dispose(bool disposing)

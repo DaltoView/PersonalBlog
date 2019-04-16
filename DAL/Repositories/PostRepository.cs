@@ -38,6 +38,9 @@ namespace DAL.Repositories
 
         public IEnumerable<Post> GetAllPosts(PostFilter postFilter)
         {
+            if(string.IsNullOrEmpty(postFilter.SortOrder))
+                postFilter.SortOrder = "postdate_desc";
+
             var posts = context.Posts.AsQueryable();
 
             if(postFilter != null)
