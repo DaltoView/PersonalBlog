@@ -32,7 +32,7 @@ namespace WebApi.Controllers
         [HttpGet]
         [Route("")]
         public IHttpActionResult GetAllPosts([FromUri]IEnumerable<string> tags = null, string search = null,
-            DateTime? postFrom = null, DateTime? postTo = null, string sortOrder = null, int? offset = null, int? limit = null)
+            DateTime? postFrom = null, DateTime? postTo = null, string sortOrder = null, int? offset = null, int? limit = 20)
         {
             var filter = new PostFilterDTO()
             {

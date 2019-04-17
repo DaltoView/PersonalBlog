@@ -4,6 +4,9 @@ using Ninject.Modules;
 
 namespace BLL.Infrastructure
 {
+    /// <summary>
+    /// Module for dependency injection.
+    /// </summary>
     public class ServiceModule : NinjectModule
     {
         private readonly string _connectionString;

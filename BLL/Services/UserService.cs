@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    /// <summary>
+    /// Contains methods for performing actions on users.
+    /// </summary>
     public class UserService : BaseService<UserDTO, User>, IUserService
     {
         public UserService(IUnitOfWork unitOfWork)
@@ -21,6 +24,11 @@ namespace BLL.Services
             mapper = AutomapperConfigs.AutomapperConfigs.GetUserServiceMapper();
         }
 
+        /// <summary>
+        /// Gets all users by filter parameters.
+        /// </summary>
+        /// <param name="userSearchDTO"></param>
+        /// <returns></returns>
         public IEnumerable<UserDTO> GetAllUsers(UserFilterDTO userSearchDTO)
         {
             if (string.IsNullOrEmpty(userSearchDTO.SortOrder))
@@ -111,7 +119,7 @@ namespace BLL.Services
                 }
                 );
 
-            return result.ToList();
+            return result;
         }
 
         public UserDTO GetUserById(Guid id)
@@ -148,6 +156,11 @@ namespace BLL.Services
             return new OperationDetails(true);
         }
 
+        /// <summary>
+        /// Edits user (email, username, firstname, lastname, birthdate).
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public OperationDetails EditUser(UserDTO user)
         {
             if (user == null)

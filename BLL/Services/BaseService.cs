@@ -4,6 +4,11 @@ using System;
 
 namespace BLL.Services
 {
+    /// <summary>
+    /// Represents a service with basic automapper and IDisposable implementation.
+    /// </summary>
+    /// <typeparam name="TBllEntity"></typeparam>
+    /// <typeparam name="TDalEntity"></typeparam>
     public abstract class BaseService<TBllEntity, TDalEntity> : IDisposable where TBllEntity : class where TDalEntity : class
     {
         protected IUnitOfWork UnitOfWork { get; private set; }

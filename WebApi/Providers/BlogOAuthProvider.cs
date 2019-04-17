@@ -13,6 +13,9 @@ using WebApi.DependencyInjection;
 
 namespace WebApi.Providers
 {
+    /// <summary>
+    /// Provides a authorization by tokens.
+    /// </summary>
     public class BlogOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly IAccountService _accountService = BlogDependencyInjection.GetKernel().Get<IAccountService>();

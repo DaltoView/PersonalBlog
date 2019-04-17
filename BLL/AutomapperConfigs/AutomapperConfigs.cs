@@ -6,6 +6,9 @@ using DAL.Entities.Filters;
 
 namespace BLL.AutomapperConfigs
 {
+    /// <summary>
+    /// Provides static methods for return automapper configs.
+    /// </summary>
     public static class AutomapperConfigs
     {
         public static IMapper GetBasicMapper<TDto, TEntity>()

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    /// <summary>
+    /// Contains methods for performing actions on comments.
+    /// </summary>
     public class CommentService : BaseService<CommentDTO, Comment>, ICommentService
     {
         public CommentService(IUnitOfWork unitOfWork)
@@ -25,6 +28,10 @@ namespace BLL.Services
             return mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDTO>>(comments);
         }
 
+        /// <summary>
+        /// Creates comment and set post date and time to UTC now and edit date and time to default ("1980-01-01").
+        /// </summary>
+        /// <param name="comment"></param>
         public void CreateComment(CommentDTO comment)
         {
             comment.PostDate = DateTime.UtcNow;
@@ -33,6 +40,10 @@ namespace BLL.Services
             UnitOfWork.Save();
         }
 
+        /// <summary>
+        /// Edits comment and set edit date and time to UTC now.
+        /// </summary>
+        /// <param name="comment"></param>
         public void EditComment(CommentDTO comment)
         {
             var commentEntity = mapper.Map<CommentDTO, Comment>(comment);

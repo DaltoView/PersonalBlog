@@ -11,6 +11,9 @@ using System.Web.Http.ExceptionHandling;
 
 namespace WebApi.Filters
 {
+    /// <summary>
+    /// Provides a global exception handler.
+    /// </summary>
     public class GlobalExceptionHandler : ExceptionHandler
     {
         public override void Handle(ExceptionHandlerContext context)

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO.Filters
 {
+    /// <summary>
+    /// Represents a collection of filter parameters for postService.
+    /// </summary>
     public class PostFilterDTO
     {
         public IEnumerable<string> Tags { get; set; }

@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    /// <summary>
+    /// Contains methods for performing actions on posts.
+    /// </summary>
     public class PostService : BaseService<PostDTO, Post>, IPostService
     {
         public PostService(IUnitOfWork unitOfWork)
@@ -20,6 +23,11 @@ namespace BLL.Services
             mapper = AutomapperConfigs.AutomapperConfigs.GetPostServiceMapper();
         }
 
+        /// <summary>
+        ///  Gets all posts by filter parameters.
+        /// </summary>
+        /// <param name="postFilterDTO"></param>
+        /// <returns></returns>
         public IEnumerable<PostDTO> GetAllPosts(PostFilterDTO postFilterDTO)
         {
             var posts = UnitOfWork.Posts.GetAllPosts(mapper.Map<PostFilterDTO, PostFilter>(postFilterDTO));
@@ -32,6 +40,10 @@ namespace BLL.Services
             return mapper.Map<Post, PostDTO>(post);
         }
 
+        /// <summary>
+        /// Creates post and set post date and time to UTC now and edit date and time to default ("1980-01-01").
+        /// </summary>
+        /// <param name="post"></param>
         public void CreatePost(PostDTO post)
         {
             post.PostDate = DateTime.UtcNow;
@@ -43,6 +55,10 @@ namespace BLL.Services
             UnitOfWork.Save();
         }
 
+        /// <summary>
+        /// Edits post and set edit date and time to UTC now.
+        /// </summary>
+        /// <param name="post"></param>
         public void EditPost(PostDTO post)
         {
             post.EditDate = DateTime.UtcNow;

@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         [HttpGet]
         [Route("")]
         public IHttpActionResult GetAll([FromUri] string search = null, string role = null, int? ageFrom = null, 
-            int? ageTo = null, string sortOrder = null, int? offset = null, int? limit = null)
+            int? ageTo = null, string sortOrder = null, int? offset = null, int? limit = 20)
         {
             var filter = new UserFilterDTO()
             {

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO.Filters
 {
+    /// <summary>
+    /// Represents a collection of filter parameters for userService.
+    /// </summary>
     public class UserFilterDTO
     {
         public string Search { get; set; }

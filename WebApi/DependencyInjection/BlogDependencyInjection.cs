@@ -6,8 +6,15 @@ using Ninject.Modules;
 
 namespace WebApi.DependencyInjection
 {
+    /// <summary>
+    /// Provides a dependency injection for OAuth provider.
+    /// </summary>
     public class BlogDependencyInjection
     {
+        /// <summary>
+        /// Returns a module for getting interface instances.
+        /// </summary>
+        /// <returns></returns>
         public static IKernel GetKernel()
         {
             INinjectModule module = new ServiceModule("DefaultConnection");

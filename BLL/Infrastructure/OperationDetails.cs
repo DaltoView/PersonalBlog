@@ -1,5 +1,8 @@
 ﻿namespace BLL.Infrastructure
 {
+    /// <summary>
+    /// Represents a result of identity opertions.
+    /// </summary>
     public class OperationDetails
     {
         public OperationDetails(bool succeded)

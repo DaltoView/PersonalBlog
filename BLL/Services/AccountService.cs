@@ -10,6 +10,9 @@ using System.Security.Claims;
 
 namespace BLL.Services
 {
+    /// <summary>
+    /// Contains methods for performing user account operations.
+    /// </summary>
     public class AccountService : BaseService<UserDTO, User>, IAccountService
     {
         public AccountService(IUnitOfWork unitOfWork)
@@ -18,6 +21,12 @@ namespace BLL.Services
             mapper = AutomapperConfigs.AutomapperConfigs.GetAccountServiceMapper();
         }
 
+        /// <summary>
+        /// Register user and add "user" role.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameter is null.</exception>
         public OperationDetails RegisterUser(UserDTO user)
         {
             if (user == null)
@@ -45,6 +54,13 @@ namespace BLL.Services
             return new OperationDetails(true);
         }
 
+        /// <summary>
+        /// Returns the user by username and password.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameters are null.</exception>
         public UserDTO FindUser(string userName, string password)
         {
             if (userName == null)
@@ -63,6 +79,12 @@ namespace BLL.Services
             return userDto;
         }
 
+        /// <summary>
+        /// Finds and edits user information (Email, UserName, FirstName, LastName, Birthdate).
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameter is null.</exception>
         public OperationDetails EditUser(UserDTO user)
         {
             if (user == null)
@@ -89,6 +111,12 @@ namespace BLL.Services
             return new OperationDetails(true);
         }
 
+        /// <summary>
+        /// Returns role of the user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameter is null.</exception>
         public string GetRoleByUserId(Guid userId)
         {
             if (userId == null)
@@ -98,6 +126,13 @@ namespace BLL.Services
 
         }
 
+        /// <summary>
+        /// Creates identity claims of the user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="authenticationType"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameters are null.</exception>
         public ClaimsIdentity CreateIdentity(Guid userId, string authenticationType)
         {
             if (authenticationType == null)
@@ -108,6 +143,12 @@ namespace BLL.Services
             return UnitOfWork.UserManager.CreateIdentity(user, authenticationType);
         }
 
+        /// <summary>
+        /// Returns the user by input id.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameter is null.</exception>
         public UserDTO GetUserById(Guid userId)
         {
             User user = UnitOfWork.UserManager.FindById(userId);
@@ -116,6 +157,12 @@ namespace BLL.Services
             return userDto;
         }
 
+        /// <summary>
+        /// Returns the user by input username.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameter is null.</exception>
         public UserDTO GetUserByName(string userName)
         {
             if (userName == null)
@@ -127,6 +174,13 @@ namespace BLL.Services
             return userDto;
         }
 
+        /// <summary>
+        /// Checks if the user in input role.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when input parameter is null.</exception>
         public bool IsInRole(Guid userId, string role)
         {
             if (role == null)
@@ -134,7 +188,11 @@ namespace BLL.Services
 
             return UnitOfWork.UserManager.IsInRole(userId, role);
         }
-
+         /// <summary>
+         /// Deletes the user by id.
+         /// </summary>
+         /// <param name="id"></param>
+         /// <returns></returns>
         public OperationDetails DeleteUser(Guid id)
         {
             var user = UnitOfWork.UserManager.FindById(id);
@@ -155,6 +213,12 @@ namespace BLL.Services
             }
         }
 
+
+        /// <summary>
+        /// Deletes the user by username.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public OperationDetails DeleteUser(string userName)
         {
             if (userName == null)
