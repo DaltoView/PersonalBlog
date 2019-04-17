@@ -158,8 +158,8 @@
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DependencyInjection\BlogDependencyInjection.cs" />
-    <Compile Include="Filters\GlobalExceptionHandler.cs" />
-    <Compile Include="Filters\BlogExceptionLogger.cs" />
+    <Compile Include="GlobalFilters\GlobalExceptionHandler.cs" />
+    <Compile Include="GlobalFilters\BlogExceptionLogger.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

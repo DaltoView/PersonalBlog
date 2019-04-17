@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 
-namespace WebApi.Filters
+namespace WebApi.GlobalFilters
 {
     /// <summary>
     /// Provides a global exception handler.

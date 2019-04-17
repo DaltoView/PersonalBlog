@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System.Web.Http.ExceptionHandling;
 
-namespace WebApi.Filters
+namespace WebApi.GlobalFilters
 {
     /// <summary>
     /// Provides logging of exceptions.

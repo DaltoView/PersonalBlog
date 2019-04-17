@@ -27,6 +27,7 @@ namespace WebApi.Controllers
             _mapper = AutomapperConfigs.AutomapperConfigs.GetPostsControllerMapper();
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("")]
         public IHttpActionResult GetAllPosts([FromUri]IEnumerable<string> tags = null, string search = null,

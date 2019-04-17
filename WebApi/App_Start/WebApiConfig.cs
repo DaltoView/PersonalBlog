@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ExceptionHandling;
-using WebApi.Filters;
+using WebApi.GlobalFilters;
 
 namespace WebApi
 {
