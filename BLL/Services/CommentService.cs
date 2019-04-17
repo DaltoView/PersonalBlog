@@ -28,6 +28,12 @@ namespace BLL.Services
             return mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDTO>>(comments);
         }
 
+        public CommentDTO GetCommentById(Guid id)
+        {
+            var comment = UnitOfWork.Comments.Get(id);
+            return mapper.Map<Comment, CommentDTO>(comment);
+        }
+
         /// <summary>
         /// Creates comment and set post date and time to UTC now and edit date and time to default ("1980-01-01").
         /// </summary>

@@ -114,6 +114,9 @@ namespace WebApi.Controllers
 
             try
             {
+                if (!UserAuthorize(_postService.GetPostById(id).AuthorId, "Moder, Admin"))
+                    return Unauthorized();
+
                 var postDto = _mapper.Map<PostCreateModel, PostDTO>(post);
                 postDto.Id = id;
                 _postService.EditPost(postDto);
@@ -132,6 +135,9 @@ namespace WebApi.Controllers
         {
             try
             {
+                if (!UserAuthorize(_postService.GetPostById(id).AuthorId, "Admin"))
+                    return Unauthorized();
+
                 _postService.DeletePost(id);
             }
             catch(Exception)
@@ -190,6 +196,20 @@ namespace WebApi.Controllers
             _postService.Dispose();
             _commentService.Dispose();
             base.Dispose(disposing);
+        }
+
+        private bool UserAuthorize(Guid authorId, string allowRoles)
+        {
+            var roles = allowRoles.Split(',').Select(p => p.Trim()).ToList();
+            var userId = new Guid(User.Identity.GetUserId());
+
+            if (roles.Any(p => User.IsInRole(p)))
+                return true;
+
+            if (authorId == userId)
+                return true;
+
+            return false;
         }
     }
 }

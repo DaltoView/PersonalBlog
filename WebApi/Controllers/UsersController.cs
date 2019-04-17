@@ -12,8 +12,7 @@ using WebApi.Models.UsersController;
 
 namespace WebApi.Controllers
 {
-    //[Authorize(Roles = "Admin")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {

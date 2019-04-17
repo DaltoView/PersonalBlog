@@ -32,6 +32,9 @@ namespace WebApi.Controllers
         {
             try
             {
+                if (!UserAuthorize(_commentService.GetCommentById(id).AuthorId, "Moder, Admin"))
+                    return Unauthorized();
+
                 var commentDto = _mapper.Map<CommentEditModel, CommentDTO>(comment);
                 commentDto.Id = id;
                 _commentService.EditComment(commentDto);
@@ -50,6 +53,9 @@ namespace WebApi.Controllers
         {
             try
             {
+                if (!UserAuthorize(_commentService.GetCommentById(id).AuthorId, "Admin"))
+                    return Unauthorized();
+
                 _commentService.DeleteComment(id);
             }
             catch (Exception)
@@ -64,6 +70,26 @@ namespace WebApi.Controllers
         {
             _commentService.Dispose();
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Returns true if user has necessary role or request own resource. 
+        /// </summary>
+        /// <param name="authorId"></param>
+        /// <param name="allowRoles"></param>
+        /// <returns></returns>
+        private bool UserAuthorize(Guid authorId ,string allowRoles)
+        {
+            var roles = allowRoles.Split(',').Select(p => p.Trim()).ToList();
+            var userId = new Guid(User.Identity.GetUserId());
+
+            if (roles.Any(p => User.IsInRole(p)))
+                return true;
+
+            if (authorId == userId)
+                return true;
+
+            return false;
         }
     }
 }
