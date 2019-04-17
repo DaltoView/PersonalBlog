@@ -73,7 +73,7 @@ namespace BLL.Services
             User user = UnitOfWork.UserManager.Find(userName, password);
             UserDTO userDto = mapper.Map<User, UserDTO>(user);
 
-            if(userDto != null)
+            if (userDto != null)
                 userDto.Role = GetRoleByUserId(user.Id);
 
             return userDto;
@@ -188,11 +188,11 @@ namespace BLL.Services
 
             return UnitOfWork.UserManager.IsInRole(userId, role);
         }
-         /// <summary>
-         /// Deletes the user by id.
-         /// </summary>
-         /// <param name="id"></param>
-         /// <returns></returns>
+        /// <summary>
+        /// Deletes the user by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public OperationDetails DeleteUser(Guid id)
         {
             var user = UnitOfWork.UserManager.FindById(id);

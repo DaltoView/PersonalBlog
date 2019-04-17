@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
-using BLL.Interfaces;
 using BLL.DTO;
+using BLL.Interfaces;
+using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using WebApi.Models.CommentsController;
-using WebApi.Models.PostsController;
-using Microsoft.AspNet.Identity;
 
 namespace WebApi.Controllers
 {
@@ -78,7 +75,7 @@ namespace WebApi.Controllers
         /// <param name="authorId"></param>
         /// <param name="allowRoles"></param>
         /// <returns></returns>
-        private bool UserAuthorize(Guid authorId ,string allowRoles)
+        private bool UserAuthorize(Guid authorId, string allowRoles)
         {
             var roles = allowRoles.Split(',').Select(p => p.Trim()).ToList();
             var userId = new Guid(User.Identity.GetUserId());

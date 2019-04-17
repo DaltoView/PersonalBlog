@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BLL.DTO.Filters
+﻿namespace BLL.DTO.Filters
 {
     /// <summary>
     /// Represents a collection of filter parameters for userService.

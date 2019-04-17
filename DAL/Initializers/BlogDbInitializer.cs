@@ -22,7 +22,7 @@ namespace DAL.Initializers
             roleManager.Create(moderRole);
             roleManager.Create(adminRole);
 
-            var author = new Author { Birthdate = DateTime.Parse("1997-10-29"), FirstName = "Dima", LastName = "Semenko"};
+            var author = new Author { Birthdate = DateTime.Parse("1997-10-29"), FirstName = "Dima", LastName = "Semenko" };
             var admin = new User { Email = "semenko@gmail.com", UserName = "DaltoView", Author = author };
             string password = "Admin1";
 

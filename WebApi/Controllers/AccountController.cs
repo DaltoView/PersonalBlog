@@ -4,10 +4,7 @@ using BLL.Infrastructure;
 using BLL.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using WebApi.Models.AccountController;
 
@@ -35,7 +32,7 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             try
             {
                 UserDTO userDTO = _mapper.Map<UserRegisterModel, UserDTO>(user);
@@ -92,7 +89,7 @@ namespace WebApi.Controllers
 
                 return Ok();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return Conflict();
             }

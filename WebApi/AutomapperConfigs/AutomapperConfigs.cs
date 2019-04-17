@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using BLL.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WebApi.Models;
 using WebApi.Models.AccountController;
 using WebApi.Models.CommentsController;
 using WebApi.Models.PostsController;

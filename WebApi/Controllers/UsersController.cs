@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using WebApi.Models.UsersController;
 
@@ -27,7 +26,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetAll([FromUri] string search = null, string role = null, int? ageFrom = null, 
+        public IHttpActionResult GetAll([FromUri] string search = null, string role = null, int? ageFrom = null,
             int? ageTo = null, string sortOrder = null, int? offset = null, int? limit = 20)
         {
             var filter = new UserFilterDTO()
@@ -105,7 +104,7 @@ namespace WebApi.Controllers
 
                 return StatusCode(HttpStatusCode.NoContent);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return Conflict();
             }
@@ -121,7 +120,7 @@ namespace WebApi.Controllers
 
                 return StatusCode(HttpStatusCode.NoContent);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return NotFound();
             }

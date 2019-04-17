@@ -3,12 +3,9 @@ using BLL.Interfaces;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Ninject;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using WebApi.DependencyInjection;
 
 namespace WebApi.Providers

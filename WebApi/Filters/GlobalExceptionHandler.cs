@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 
@@ -33,13 +29,13 @@ namespace WebApi.Filters
 
             public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
             {
-            HttpResponseMessage response =
-                             new HttpResponseMessage(HttpStatusCode.InternalServerError)
-                             {
-                                 Content = new StringContent(Content),
-                                 RequestMessage = Request
-                             };
-            return Task.FromResult(response);
+                HttpResponseMessage response =
+                                 new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                                 {
+                                     Content = new StringContent(Content),
+                                     RequestMessage = Request
+                                 };
+                return Task.FromResult(response);
             }
         }
     }

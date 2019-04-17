@@ -38,14 +38,14 @@ namespace DAL.Repositories
 
         public IEnumerable<Post> GetAllPosts(PostFilter postFilter)
         {
-            if(string.IsNullOrEmpty(postFilter.SortOrder))
+            if (string.IsNullOrEmpty(postFilter.SortOrder))
                 postFilter.SortOrder = "postdate_desc";
 
             var posts = context.Posts.AsQueryable();
 
-            if(postFilter != null)
+            if (postFilter != null)
             {
-                if(postFilter.Tags != null && postFilter.Tags.Any())
+                if (postFilter.Tags != null && postFilter.Tags.Any())
                 {
                     var postsAll = posts;
                     posts = posts.Where(p => p.Tags.Any(t => t.Name.ToLower() == postFilter.Tags.FirstOrDefault().ToLower()));
@@ -68,7 +68,7 @@ namespace DAL.Repositories
                 if (postFilter.PostTo.HasValue)
                     posts = posts.Where(p => p.PostDate <= postFilter.PostTo);
 
-                if(postFilter.SortOrder != null)
+                if (postFilter.SortOrder != null)
                 {
                     switch (postFilter.SortOrder.ToLower())
                     {

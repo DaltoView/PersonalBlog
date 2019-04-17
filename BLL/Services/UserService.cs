@@ -8,8 +8,6 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -36,7 +34,7 @@ namespace BLL.Services
 
             var users = UnitOfWork.UserManager.Users.AsQueryable();
 
-            if(userSearchDTO != null)
+            if (userSearchDTO != null)
             {
                 if (!string.IsNullOrEmpty(userSearchDTO.Search))
                 {
@@ -168,7 +166,7 @@ namespace BLL.Services
 
             var existingUser = UnitOfWork.UserManager.FindById(user.Id);
 
-            if(existingUser == null)
+            if (existingUser == null)
                 return new OperationDetails(false, "User not found");
 
             var existingAuthor = UnitOfWork.Authors.Get(existingUser.Author.Id);
@@ -186,7 +184,7 @@ namespace BLL.Services
             {
                 var userRoles = UnitOfWork.UserManager.GetRoles(user.Id);
 
-                foreach(var role in userRoles)
+                foreach (var role in userRoles)
                 {
                     UnitOfWork.UserManager.RemoveFromRole(user.Id, role);
                 }

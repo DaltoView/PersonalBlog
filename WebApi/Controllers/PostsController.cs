@@ -7,9 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using WebApi.Models.CommentsController;
 using WebApi.Models.PostsController;
 
 namespace WebApi.Controllers
@@ -54,7 +52,7 @@ namespace WebApi.Controllers
 
                 return Ok(_mapper.Map<IEnumerable<PostDTO>, IEnumerable<PostModel>>(posts));
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return NotFound();
             }
@@ -73,7 +71,7 @@ namespace WebApi.Controllers
 
                 return Ok(_mapper.Map<PostDTO, PostModel>(post));
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return NotFound();
             }
@@ -121,7 +119,7 @@ namespace WebApi.Controllers
                 postDto.Id = id;
                 _postService.EditPost(postDto);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return Conflict();
             }
@@ -140,7 +138,7 @@ namespace WebApi.Controllers
 
                 _postService.DeletePost(id);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return NotFound();
             }
@@ -175,7 +173,7 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             try
             {
                 var commentDto = _mapper.Map<CommentModel, CommentDTO>(comment);
@@ -183,7 +181,7 @@ namespace WebApi.Controllers
                 commentDto.PostId = id;
                 _commentService.CreateComment(commentDto);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest();
             }
