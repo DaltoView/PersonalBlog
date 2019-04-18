@@ -10,6 +10,7 @@ namespace DAL.EntityConfigurations
         {
             HasKey(p => p.Id);
             Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(p => p.Name).IsRequired().HasMaxLength(50);
         }
     }
 }
